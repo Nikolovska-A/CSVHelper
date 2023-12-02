@@ -1,0 +1,82 @@
+{
+	"info": {
+		"_postman_id": "70ee0791-5ace-402e-9e26-b353046490a6",
+		"name": "Invoices",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "13341761"
+	},
+	"item": [
+		{
+			"name": "Import File 200",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"const expectedSchema = {",
+							"    \"type\": \"object\",",
+							"    \"properties\": {",
+							"        \"message\": { \"type\": \"string\" }",
+							"    },",
+							"    \"required\": [\"message\"]",
+							"};",
+							"",
+							"pm.test(\"Response has correct schema\", function () {",
+							"    const jsonData = pm.response.json();",
+							"    pm.expect(tv4.validate(jsonData, expectedSchema)).to.be.true;",
+							"});",
+							"",
+							"",
+							"pm.test(\"Response time is less than 500ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(5000);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "",
+						"value": "",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "formFile",
+							"type": "file",
+							"src": "/Users/aleksandranikolovska/Desktop/invoices.csv"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://127.0.0.1:7087/v1/invoice/import",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "7087",
+					"path": [
+						"v1",
+						"invoice",
+						"import"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
